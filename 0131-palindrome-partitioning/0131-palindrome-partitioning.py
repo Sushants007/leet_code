@@ -1,7 +1,7 @@
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
         res = []
-        #t=[[-1*(len(s)+1)]*(len(s)+1)]
+        t=[[-1*(len(s)+1)]*(len(s)+1)]
         self.helper(res, [], s)
         return res
 
