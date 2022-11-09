@@ -11,8 +11,8 @@ class Solution:
         def fn(n):
             
             if n == 1: return [TreeNode()]
-            if n%2==0:
-                return []
+            #if n%2==0:
+            #    return []
             ans = []
             for nn in range(1, n, 2): 
                 for left in fn(nn):
