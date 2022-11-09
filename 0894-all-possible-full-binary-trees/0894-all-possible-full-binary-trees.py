@@ -8,14 +8,14 @@ class Solution:
     dp={}
     def allPossibleFBT(self, N: int) -> List[TreeNode]:
         
-        #@lru_cache(None)
+        @lru_cache(None)
         def fn(n):
             
             if n == 1: 
                 self.dp[n]=[TreeNode()]
                 return self.dp[n]
-            #if n%2==0:
-            #    return []
+            if n%2==0:
+                return []
             ans = []
             for nn in range(1, n, 2): 
                 for left in fn(nn):
