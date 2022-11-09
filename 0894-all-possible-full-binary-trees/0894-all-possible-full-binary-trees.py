@@ -5,12 +5,15 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    dp={}
     def allPossibleFBT(self, N: int) -> List[TreeNode]:
         
         #@lru_cache(None)
         def fn(n):
             
-            if n == 1: return [TreeNode()]
+            if n == 1: 
+                self.dp[n]=[TreeNode()]
+                return self.dp[n]
             #if n%2==0:
             #    return []
             ans = []
@@ -18,6 +21,7 @@ class Solution:
                 for left in fn(nn):
                     for right in fn(n-1-nn): 
                         ans.append(TreeNode(left=left, right=right))
-            return ans 
+            self.dp[n]=ans 
+            return self.dp[n]
         
         return fn(N)
