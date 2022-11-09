@@ -7,7 +7,7 @@
 class Solution:
     def allPossibleFBT(self, N: int) -> List[TreeNode]:
         
-        @lru_cache(None)
+        #@lru_cache(None)
         def fn(n):
             
             if n == 1: return [TreeNode()]
