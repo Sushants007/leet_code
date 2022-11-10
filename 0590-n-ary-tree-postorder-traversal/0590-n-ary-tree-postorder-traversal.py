@@ -8,15 +8,13 @@ class Node:
 
 class Solution:
     def postorder(self, root: 'Node') -> List[int]:
-        out=[]
-        
-        if root is None:
-            return out       
-        self.dfs(root,out)          
-        return out
-    def dfs(self,root,out):
+        res = []
+        if root == None: return res
 
-        
-        for child in root.children:
-            self.dfs(child,out)
-        out.append(root.val)
+        def recursion(root, res):
+            for child in root.children:
+                recursion(child, res)
+            res.append(root.val)
+
+        recursion(root, res)
+        return res
