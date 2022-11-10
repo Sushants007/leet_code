@@ -1,25 +1,18 @@
 class Solution:
-    def diffWaysToCompute(self, input, memo={}):
-        
-        if input.isdigit():
-            return [int(input)]
-        if input in memo:
-            return memo[input] 
-        res = []
-        for i in range(len(input)):
-            if input[i] in "-+*":
-                res1 = self.diffWaysToCompute(input[:i])
-                res2 = self.diffWaysToCompute(input[i+1:])
-                for j in res1:
-                    for k in res2:
-                        res.append(self.helper(j, k, input[i]))
-        memo[input] = res
+    def diffWaysToCompute(self, expression: str) -> List[int]:
+        if expression.isnumeric():
+            return [int(expression)]
+        res=[]
+        for i, char in enumerate(expression):
+            if char in ['+','-','*']:
+                left=self.diffWaysToCompute(expression[:i])
+                right=self.diffWaysToCompute(expression[i+1:])
+                for l in left:
+                    for r in right:
+                        if char=='+':
+                            res.append(l+r)
+                        elif char=='-':
+                            res.append(l-r)
+                        else:
+                            res.append(l*r)
         return res
-
-    def helper(self, m, n, op):
-        if op == "+":
-            return m+n
-        elif op == "-":
-            return m-n
-        else:
-            return m*n
