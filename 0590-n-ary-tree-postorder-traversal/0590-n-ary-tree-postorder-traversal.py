@@ -8,13 +8,14 @@ class Node:
 
 class Solution:
     def postorder(self, root: 'Node') -> List[int]:
+
         res = []
         if root == None: return res
 
-        def recursion(root, res):
-            for child in root.children:
-                recursion(child, res)
-            res.append(root.val)
+        stack = [root]
+        while stack:
+            curr = stack.pop()
+            res.append(curr.val)
+            stack.extend(curr.children)
 
-        recursion(root, res)
-        return res
+        return res[::-1]
