@@ -2,8 +2,8 @@ class Solution:
     def findKthBit(self, n: int, k: int) -> str:
         if n == 1:
             return "0"
-        if k==1:
-            return '0'
+        #if k==1:
+        #    return '0'
         s = '011'
         
         for i in range(2,n):
