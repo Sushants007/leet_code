@@ -1,7 +1,6 @@
 class Solution:
     def countBalls(self, lowLimit: int, highLimit: int) -> int:
-        if highLimit<10 and highLimit!=lowLimit:
-            return 1
+
         freq = defaultdict(int)
         for x in range(lowLimit, highLimit+1):
             freq[sum(int(xx) for xx in str(x))] += 1
