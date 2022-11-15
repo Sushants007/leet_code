@@ -2,6 +2,6 @@ class Solution:
     def minBitFlips(self, x: int, y: int) -> int:
         Xor, ans = x ^ y, 0
         while Xor:
-            ans += 1
-            Xor &= Xor-1
-        return ans
+            ans += Xor & 1
+            Xor >>= 1
+        return ans        
