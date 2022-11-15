@@ -1,7 +1,7 @@
 class Solution:
-    def minBitFlips(self, s: int, g: int) -> int:
-        count = 0
-        while s or g:
-            if s%2 != g%2: count+=1
-            s, g = s//2, g//2
-        return count
+    def minBitFlips(self, x: int, y: int) -> int:
+        Xor, ans = x ^ y, 0
+        while Xor:
+            ans += 1
+            Xor &= Xor-1
+        return ans
