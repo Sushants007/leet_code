@@ -6,13 +6,14 @@
 #         self.right = right
 class Solution:
     def isUnivalTree(self, root) -> bool:
-        if not root:
-            return True
-        if root.left:
-            if root.val!=root.left.val :
+        x=root.val
+        q=[root]
+        while q:
+            node=q.pop(0)
+            if node.val!=x:
                 return False
-        if root.right:
-            if root.val!=root.right.val:
-                return False
-            
-        return self.isUnivalTree(root.left) and self.isUnivalTree(root.right)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+        return True
