@@ -6,14 +6,18 @@
 #         self.right = right
 class Solution:
     def generateTrees(self, n):
-        def generate(first, last):
-            trees = []
-            for root in range(first, last+1):
-                for left in generate(first, root-1):
-                    for right in generate(root+1, last):
-                        node = TreeNode(root)
-                        node.left = left
-                        node.right = right
-                        trees += node,
-            return trees or [None]
-        return generate(1, n)
+        if n == 0:
+            return [[]]
+        return self.dfs(1, n+1)
+        
+    def dfs(self, start, end):
+        if start == end:
+            return None
+        result = []
+        for i in range(start, end):
+            for l in self.dfs(start, i) or [None]:
+                for r in self.dfs(i+1, end) or [None]:
+                    node = TreeNode(i)
+                    node.left, node.right  = l, r
+                    result.append(node)
+        return result
