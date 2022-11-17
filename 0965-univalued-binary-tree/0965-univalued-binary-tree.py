@@ -5,13 +5,14 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isUnivalTree(self, root: Optional[TreeNode]) -> bool:
-        def dfs(node):
-            if node is None:
-                return True
-            else:
-                if node.val!=root.val:
-                    return False
-                else:
-                    return dfs(node.left) and dfs(node.right)
-        return dfs(root)
+    def isUnivalTree(self, root) -> bool:
+        if not root:
+            return True
+        if root.left:
+            if root.val!=root.left.val :
+                return False
+        if root.right:
+            if root.val!=root.right.val:
+                return False
+            
+        return self.isUnivalTree(root.left) and self.isUnivalTree(root.right)
