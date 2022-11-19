@@ -13,9 +13,10 @@ class Solution:
             node, ls = queue.popleft()
             if not node.left and not node.right:
                 res.append(ls+str(node.val))
-            if node.left:
-                queue.append((node.left, ls+str(node.val)+"->"))
             if node.right:
                 queue.append((node.right, ls+str(node.val)+"->"))
+                
+            if node.left:
+                queue.append((node.left, ls+str(node.val)+"->"))
         return res
         
