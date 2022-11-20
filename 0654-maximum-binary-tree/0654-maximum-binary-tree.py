@@ -1,12 +1,18 @@
 class Solution:
     def constructMaximumBinaryTree(self, nums: List[int]) -> Optional[TreeNode]:
-        def dfs(nums):
-            if not nums:
-                return None
-            maxi=max(nums)
-            index=nums.index(maxi)
-            root=TreeNode(maxi)
-            root.left=dfs(nums[:index])
-            root.right=dfs(nums[index+1:])
-            return root
-        return dfs(nums)
+        if not nums:
+            return None
+        stack = []  #build a decreasing stack
+        for i in nums:
+            node = TreeNode(i)
+            lastpop = None
+            
+            while stack and stack[-1].val < i:  #popping process
+                lastpop = stack.pop()
+            node.left = lastpop
+            
+            if stack:
+                stack[-1].right = node
+            stack.append(node)
+            
+        return stack[0]
