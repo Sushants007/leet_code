@@ -2,13 +2,13 @@ class Solution:
     def hasPathSum(self, root, sum):
         if not root:
             return False
-        stack = [(root, root.val)]
-        while stack:
-            curr, val = stack.pop()
-            if not curr.left and not curr.right and val == sum:
+        queue = [(root, sum-root.val)]
+        while queue:
+            curr, val = queue.pop(0)
+            if not curr.left and not curr.right and val == 0:
                 return True
-            if curr.right:
-                stack.append((curr.right, val+curr.right.val))
             if curr.left:
-                stack.append((curr.left, val+curr.left.val))
+                queue.append((curr.left, val-curr.left.val))
+            if curr.right:
+                queue.append((curr.right, val-curr.right.val))
         return False
