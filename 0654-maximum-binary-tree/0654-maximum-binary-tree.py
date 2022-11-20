@@ -2,12 +2,12 @@ class Solution:
     def constructMaximumBinaryTree(self, nums: List[int]) -> Optional[TreeNode]:
         if not nums:
             return None
-        stack = []  #build a decreasing stack
+        stack = []  
         for i in nums:
             node = TreeNode(i)
             lastpop = None
             
-            while stack and stack[-1].val < i:  #popping process
+            while stack and stack[-1].val < i:  
                 lastpop = stack.pop()
             node.left = lastpop
             
