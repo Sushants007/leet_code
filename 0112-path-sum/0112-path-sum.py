@@ -1,11 +1,14 @@
 class Solution:
-    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+    def hasPathSum(self, root, sum):
         if not root:
             return False
-
-        if root.val ==targetSum and not (root.left or root.right):
-            return True
-        
-        targetSum -= root.val
-
-        return self.hasPathSum(root.left, targetSum) or self.hasPathSum(root.right, targetSum)
+        stack = [(root, root.val)]
+        while stack:
+            curr, val = stack.pop()
+            if not curr.left and not curr.right and val == sum:
+                return True
+            if curr.right:
+                stack.append((curr.right, val+curr.right.val))
+            if curr.left:
+                stack.append((curr.left, val+curr.left.val))
+        return False
