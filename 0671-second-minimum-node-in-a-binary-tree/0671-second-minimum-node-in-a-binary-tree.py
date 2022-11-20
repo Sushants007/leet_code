@@ -1,12 +1,16 @@
-class Solution(object):
-    def findSecondMinimumValue(self, root):
-        res = [float('inf')]
-        def traverse(node):
-            if not node:
-                return
-            if root.val < node.val < res[0]:
-                res[0] = node.val
-            traverse(node.left)
-            traverse(node.right)
-        traverse(root)
-        return -1 if res[0] == float('inf') else res[0]
+class Solution:
+    def findSecondMinimumValue(self, root: TreeNode) -> int:
+        nums = []
+        nodes = [root]
+        while nodes:
+            t = nodes.pop()
+            nums.append(t.val)
+            if t.left:
+                nodes.append(t.left)
+            if t.right:
+                nodes.append(t.right)
+        
+        if len(set(nums)) == 1:
+            return -1
+        
+        return sorted(set(nums))[1]
