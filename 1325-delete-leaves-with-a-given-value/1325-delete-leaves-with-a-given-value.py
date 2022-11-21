@@ -6,9 +6,9 @@
 #         self.right = right
 class Solution:
     def removeLeafNodes(self, root: Optional[TreeNode], target: int) -> Optional[TreeNode]:
-
         if root:
             root.left = self.removeLeafNodes(root.left, target)
             root.right = self.removeLeafNodes(root.right, target)
-            if root.val != target or root.left or root.right:
-                return root
+            if root.val == target and root.left is root.right:
+                return None
+            return root
