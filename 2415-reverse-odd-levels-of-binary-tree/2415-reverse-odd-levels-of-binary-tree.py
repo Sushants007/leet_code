@@ -1,21 +1,26 @@
 class Solution:
     def reverseOddLevels(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root: return []
         
-        q = deque([root])
-        level = 0 
-        while q:
-            if level %2 != 0:
-                l = 0           
-                r = len(q)-1    
-                while l<r: 
-                    q[l].val,q[r].val = q[r].val,q[l].val
-                    l+=1
-                    r-=1
-            for _ in range(len(q)):
-                cur = q.popleft()
-                if cur.left:
-                    q.append(cur.left)
-                if cur.right:
-                    q.append(cur.right)
-            level += 1
+        queue = [root]
+        curr = 1
+        while queue:
+            if curr == -1:
+                l = 0
+                r = len(queue) - 1
+                
+                while l <= r:
+                    queue[l].val, queue[r].val = queue[r].val, queue[l].val
+                    l += 1
+                    r -= 1
+            curr *= (-1)
+                
+                  
+            for _ in range(len(queue)):
+                ele = queue.pop(0)
+                
+                if ele.left:
+                    queue.append(ele.left)
+                    queue.append(ele.right)
+                    
         return root
