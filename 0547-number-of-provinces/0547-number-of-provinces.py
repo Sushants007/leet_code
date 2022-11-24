@@ -9,7 +9,7 @@ class Solution:
                 if isConnected[i][j]:
                     if i!=j:
                         graph[i].add(j)
-                        graph[j].add(i)
+                        #graph[j].add(i)
                         
         def bfs(node):
             q=deque([node])
