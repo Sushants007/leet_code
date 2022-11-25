@@ -1,41 +1,29 @@
 class Solution:
-    def containsCycle(self, grid: List[List[str]]) -> bool:
-        
-        def bfs(row,col,visited):
-            visited[row][col] = 1
-            queue = [[[row,col],[-1,-1]]]
-            while queue:
-                popped = queue.pop(0)
-                row, col = popped[0][0], popped[0][1]
-                pr, pc = popped[1][0], popped[1][1]
-                
-                val = grid[row][col]
-                for i in range(4):
-                    nrow = row + delrow[i]
-                    ncol = col + delcol[i]
-                    
-                    if nrow >= 0 and nrow < n and ncol >= 0 and ncol < m and grid[nrow][ncol] == val:
-                        if not visited[nrow][ncol]:
-                            visited[nrow][ncol] = 1
-                            queue.append([[nrow,ncol],[row,col]])
-                        elif pr != nrow and pc != ncol:
-                            return True
-            return False
-                
-        
-        
-        n = len(grid)
-        m = len(grid[0])
-        
-        delrow = [-1,0,1,0]
-        delcol = [0,1,0,-1]
+	def containsCycle(self, grid: List[List[str]]) -> bool:
+		row, col = len(grid), len(grid[0])
+		visited = set()
 
-        
-        visited = [[0 for _ in range(m)] for _ in range(n)]
-        
-        for i in range(n):
-            for j in range(m):
-                if not visited[i][j]:
-                    if bfs(i,j,visited):
-                        return True
-        return False
+		for x in range(row):
+			for y in range(col):
+				if (x,y) not in visited:
+					queue = deque([(x, y, set([]), None)])
+					if self.bfs(queue, row, col, grid[x][y], grid, visited):
+						return True
+
+		return False
+
+	def bfs(self, queue, row, col, curVal, grid, visited):
+		while queue:
+			x, y, curPath, prev = queue.popleft()
+
+			visited.add((x,y))
+			curPath.add((x,y))
+
+			for nx, ny in [[x+1,y],[x-1,y],[x,y-1],[x,y+1]]:
+				if 0<=nx<row and 0<=ny<col and grid[nx][ny] == curVal:
+					if (nx,ny) in curPath and (nx,ny) != prev:
+						return True
+					if (nx,ny) not in curPath:
+						queue.append((nx,ny, curPath, (x,y)))
+
+		return False
