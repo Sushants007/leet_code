@@ -15,4 +15,3 @@ class Solution:
             q.append((i,j-1))
             
         return image
-        return imagecopy
