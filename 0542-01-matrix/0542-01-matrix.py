@@ -1,18 +1,21 @@
 class Solution:
-    def updateMatrix(self, matrix: List[List[int]]) -> List[List[int]]:
-        q = deque()
-        for i in range(len(matrix)):
-            for j in range(len(matrix[0])):
-                if matrix[i][j] == 0:
-                    q.append((i, j))
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        R, C = len(mat), len(mat[0])
+        q = []
+        visited = set()
+        directions = [(0,1), (0,-1), (1, 0), (-1, 0)]
+        for r in range(R):
+            for c in range(C):
+                if mat[r][c]==0 and (r,c) not in visited:
+                    q.append((r,c))
+                    visited.add((r,c))
                 else:
-                    matrix[i][j] = -1
-
-        while q:
-            x, y = q.popleft()
-            for r, c in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
-                newX, newY = x+r, y+c
-                if 0 <= newX < len(matrix) and 0 <= newY < len(matrix[0]) and matrix[newX][newY] == -1:
-                    matrix[newX][newY] = matrix[x][y] + 1
-                    q.append((newX, newY))
-        return matrix
+                    mat[r][c]="#"
+        for r, c in q:
+            for x,y in directions:
+                rx, cy = r+x, c+y
+                
+                if 0<=rx<R and 0<=cy<C and mat[rx][cy]=="#":
+                    mat[rx][cy]=mat[r][c]+1
+                    q.append((rx, cy))
+        return mat
