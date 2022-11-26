@@ -5,24 +5,26 @@ class Solution:
         count=0
         r=len(grid)
         c=len(grid[0])
-        for i in range(0,r):
-            for j in range(0,c):
-                if i==0 or j==0 or i==r-1 or j==c-1:
-                    if grid[i][j]==1:
-                        grid[i][j]=-1
-                        q.append((i,j))
-                # if board[i][0]==1:
-                #     board[i][0]=-1
-                #     q.append((i,0))
-                # if board[i][c-1]==1:
-                #     board[i][c-1]=-1
-                #     q.append((i,c-1))
-                # if board[0][j]==1:
-                #     board[0][j]=-1
-                #     q.append((0,j))
-                # if board[r-1][j]==1:
-                #     board[r-1][j]=-1
-                #     q.append((r-1,j))
+        # for i in range(0,r):
+        #     for j in range(0,c):
+        #         if i==0 or j==0 or i==r-1 or j==c-1:
+        #             if grid[i][j]==1:
+        #                 grid[i][j]=-1
+        #                 q.append((i,j))
+        for i in range(0,r):         
+            if grid[i][0]==1:
+                grid[i][0]=-1
+                q.append((i,0))
+            if grid[i][c-1]==1:
+                grid[i][c-1]=-1
+                q.append((i,c-1))
+        for j in range(0,c):                    
+            if grid[0][j]==1:
+                grid[0][j]=-1
+                q.append((0,j))
+            if grid[r-1][j]==1:
+                grid[r-1][j]=-1
+                q.append((r-1,j))
 
         while q:
             curr=q[0]
