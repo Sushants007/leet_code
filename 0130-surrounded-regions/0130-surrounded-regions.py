@@ -1,37 +1,19 @@
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
-        n = len(board)
-        m = len(board[0])
+        queue = collections.deque([])
+        for r in range(len(board)):
+            for c in range(len(board[0])):
+                if (r in [0, len(board)-1] or c in [0, len(board[0])-1]) and board[r][c] == "O":
+                    queue.append((r, c))
+        while queue:
+            r, c = queue.popleft()
+            if 0<=r<len(board) and 0<=c<len(board[0]) and board[r][c] == "O":
+                board[r][c] = "."
+                queue.extend([(r-1, c),(r+1, c),(r, c-1),(r, c+1)])
         
-        if n < 3 or m < 3:            
-            return
-        
-        def dfs(row: int, col: int) -> None:
-            board[row][col] = 'R'
-            if row > 0 and board[row - 1][col] == 'O':
-                dfs(row - 1, col)
-            if row < n - 1 and board[row + 1][col] == 'O':
-                dfs(row + 1, col)
-            if col > 0 and board[row][col - 1] == 'O':
-                dfs(row, col - 1)
-            if col < m - 1 and board[row][col + 1] == 'O':
-                dfs(row, col + 1)
-        
-        for row in range(n):
-            if board[row][0] == 'O':
-                dfs(row, 0)
-            if board[row][m - 1] == 'O':
-                dfs(row, m - 1)
-        
-        for col in range(1, m - 1):
-            if board[0][col] == 'O':
-                dfs(0, col)
-            if board[n - 1][col] == 'O':
-                dfs(n - 1, col)
-        
-        for row in range(n):
-            for col in range(m):
-                if board[row][col] == 'O':
-                    board[row][col] = 'X'
-                elif board[row][col] == 'R':
-                    board[row][col] = 'O'
+        for r in range(len(board)):
+            for c in range(len(board[0])):
+                if board[r][c] == "O":
+                    board[r][c] = "X"
+                elif board[r][c] == ".":
+                    board[r][c] = "O"
