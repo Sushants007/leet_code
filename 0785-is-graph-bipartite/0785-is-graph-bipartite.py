@@ -1,19 +1,25 @@
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
-        def dfs_color(i):
-            for nb in graph[i]:
-                if nb in color:
-                    if color[nb] == color[i]:
-                        return False
-                else:
-                    color[nb] = 1 - color[i]
-                    if not dfs_color(nb):
+        mp={}
+        for i in range(len(graph)):
+            mp[i]=graph[i]
+        
+        def bfs(node,color,mp):
+            color[node]=1
+            que=deque([node])
+            while que:
+                ele = que.popleft()
+                for i in mp[ele]:
+                    if color[i]==-1:
+                        color[i]=1-color[ele]
+                        que.append(i)
+                    elif color [i]==color[ele]:
                         return False
             return True
-        color = {}
-        for i in range(len(graph)):
-            if i not in color:
-                color[i] = 0
-                if not dfs_color(i):
+        
+        color=[-1]*len(mp)
+        for i in range(len(mp)):
+            if color[i]==-1:
+                if not bfs(i,color,mp):
                     return False
         return True
