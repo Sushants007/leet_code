@@ -6,14 +6,14 @@ class Solution:
         for child, parent in prerequisites:
             graph[parent].append(child)
             indegree[child]+=1
-        queue = deque()
+        queue = []
         for i, value in enumerate(indegree):
             if value == 0:
                 queue.append(i)
 
         seq = []
         while queue:
-            course = queue.popleft()
+            course = queue.pop(0)
             seq.append(course)
             for neighbour in graph[course]:
                 indegree[neighbour] -= 1
