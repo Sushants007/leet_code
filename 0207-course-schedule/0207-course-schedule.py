@@ -1,21 +1,24 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        graph = [[] for _ in range(numCourses)]
-        visit = [0 for _ in range(numCourses)]
-        for x, y in prerequisites:
-            graph[x].append(y)
-        def dfs(i):
-            if visit[i] == 'i was here':
-                return False
-            if visit[i] == 'im here':
-                return True
-            visit[i] = 'im here'
-            for j in graph[i]:
-                if dfs(j):
-                    return True
-            visit[i] = 'i was here'
-            return False
-        for i in range(numCourses):
-            if dfs(i):
-                return False
-        return True
+        graph = defaultdict(list)
+        indegree = [0] * numCourses
+
+        for child, parent in prerequisites:
+            graph[parent].append(child)
+            indegree[child]+=1
+        queue = deque()
+        for i, value in enumerate(indegree):
+            if value == 0:
+                queue.append(i)
+
+        seq = []
+        while queue:
+            course = queue.popleft()
+            seq.append(course)
+            for neighbour in graph[course]:
+                indegree[neighbour] -= 1
+
+                if indegree[neighbour] == 0:
+                    queue.append(neighbour)
+
+        return len(seq) == numCourses
