@@ -5,15 +5,15 @@ class Solution:
         for x, y in prerequisites:
             graph[x].append(y)
         def dfs(i):
-            if visit[i] == -1:
+            if visit[i] == 'i was here':
                 return False
-            if visit[i] == 1:
+            if visit[i] == 'im here':
                 return True
-            visit[i] = 1
+            visit[i] = 'im here'
             for j in graph[i]:
                 if dfs(j):
                     return True
-            visit[i] = -1
+            visit[i] = 'i was here'
             return False
         for i in range(numCourses):
             if dfs(i):
