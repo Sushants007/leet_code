@@ -14,4 +14,6 @@ class Solution:
                     heap.append((time+t,i))
                     
         mx=max(poora_time)
-        return mx if mx < float("inf") else -1        
+        if mx < float("inf"):
+            return mx  
+        return -1        
