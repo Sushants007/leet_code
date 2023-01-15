@@ -1,25 +1,23 @@
 class Solution:
-    def findTheCity(self, n: int, edges: List[List[int]], dt: int) -> int:
-        g = [[math.inf] * n for _ in range(n)]
+    def findTheCity(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
+        dist = [[float('inf')] * n for i in range(n)]
         for i in range(n):
-            g[i][i] = 0
-        for e in edges:
-            g[e[0]][e[1]] = e[2]
-            g[e[1]][e[0]] = e[2]
-       
-	   # Floyd Warshall's shortest path
+            dist[i][i] = 0
+        for i, j, w in edges:
+            dist[i][j] = w
+            dist[j][i] = w
+        min_distance = [0] * n
         for k in range(n):
             for i in range(n):
                 for j in range(n):
-                    if g[i][j] > g[i][k] + g[k][j]:
-                        g[i][j] = g[i][k] + g[k][j]
-        res_node, res_connected = -1, math.inf
+                    new_dist = dist[i][k] + dist[k][j]
+                    if dist[i][j] > new_dist:
+                        dist[i][j] = new_dist
+
+        res, min_count, min_distance = 0, float('inf'), [0] * n
         for i in range(n):
-            conn = 0
-            for j in range(n):
-                if g[i][j] <= dt:
-                    conn += 1
-            if conn <= res_connected:
-                res_node, res_connected = i, conn
-        return res_node
-            
+            min_distance[i] = sum([dist[i][j] <= distanceThreshold for j in range(n)])
+            if min_count >= min_distance[i]:
+                res = i
+                min_count = min_distance[i]
+        return res
